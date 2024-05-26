@@ -137,7 +137,8 @@ The `Graph` class encapsulates functionality for representing and manipulating b
   - **Implementation**: Both prefix and postfix forms increment or decrement every edge weight by 1.
   - **Prefix Code Example**:
     ```cpp
-    Graph& Graph::operator++() {
+    Graph& Graph::operator++()
+    {
         for (auto &row : this->adjMatrix) {
             for (auto &weight : row) {
                 ++weight;
@@ -148,9 +149,8 @@ The `Graph` class encapsulates functionality for representing and manipulating b
     ```
   - **Postfix Code Example**:
     ```cpp
-    Graph Graph::operator++
-
-    (int) {
+    Graph Graph::operator++(int)
+    {
         Graph temp = *this;
         ++(*this);
         return temp;
