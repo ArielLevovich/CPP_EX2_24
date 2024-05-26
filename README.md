@@ -150,7 +150,7 @@ The `Graph` class encapsulates functionality for representing and manipulating b
     ```cpp
     Graph Graph::operator++
 
-(int) {
+    (int) {
         Graph temp = *this;
         ++(*this);
         return temp;
