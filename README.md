@@ -32,7 +32,9 @@ The `Graph` class encapsulates functionality for representing and manipulating b
 - **Operator * (Multiplication by a Scalar)**:
   - **Implementation**: Multiplies each edge weight of the graph by a given scalar. This operator directly scales each entry in the adjacency matrix by the scalar value.
   - **Impact on Algorithms**: Scaling by a positive scalar retains the graph's structure but alters path weights. If scaled by a negative, it can invert the sign of weights, impacting algorithms that differentiate between positive and negative weights, such as those checking for negative cycles.
-  
+ 
+- **Operator Unary + (Graph Copy)**:
+  - **Implementation**: Returns a new Graph object that is a copy of the current graph, maintaining all the edge weights and properties.
 - **Operator - (Unary Negation)**:
   - **Implementation**: Negates the weights of all edges in the graph by applying a unary minus to each element of the adjacency matrix.
   - **Impact on Algorithms**: This operator can turn positive weight cycles into negative ones and vice versa, affecting algorithms like Bellman-Ford, which are used to detect negative cycles.
@@ -79,4 +81,4 @@ TEST_CASE("Graph Decrement Impact on Shortest Path") {
     ariel::Algorithms::shortestPath(g, 0, 2); // Check how the shortest path is affected
 }
 ```
-In this test, we would evaluate how the shortest path length changes after the graph is decremented. The decrement could lead to a negative cycle, which would fundamentally alter the results from shortest path algorithms like Floyd-Warshall or Bellman-Ford, which need to be employed instead of Dijkstra's in the presence of negative weights.
+In this test, we would evaluate how the shortest path length changes after the graph is decremented. The decrement could lead to a negative cycle, which would fundamentally alter the results from shortest path algorithms like Floyd-Warshall or Bellman-Ford. (In the first assignment I implmented via Bellman- Ford.
