@@ -1,23 +1,83 @@
-# מטלה 2 - גרפים והעמסת אופרטורים
+### README for operators assignment - EX2 
+### Ariel Levovich - 326535242
 
-במטלה הקודמת מימשתם את המחלקה `Graph.cpp` המאפשרת ייצוג של גרפים בעזרת מטריצת שכנויות. במטלה הזאת, אתם תרחיבו את המחלקה ותוסיפו תמיכה באופרטורים חשבוניים על גרפים.
-כאמור, הגרפים מיוצגים בעזרת מטריצת שכנויות, לכן כל האופרטורים צריכים להיות חוקיים עבור מטריצות (כמו שלמדתם בקורס אלגברה לינארית).
+#### Overview
+The `Graph` class encapsulates the functionality for representing and manipulating both directed and undirected graphs using adjacency matrices. It includes a comprehensive set of member functions for graph manipulation, along with overloaded operators that enhance ease of use and intuitive interaction with graph data.
 
-אתם תצטרכו להוסיף את האופרטורים הבאים:
+#### Key Features
+- **Graph Representation**: Utilizes adjacency matrices to store graph data, supporting both directed and undirected graph types.
+- **Graph Properties**: Includes methods to check for symmetry (indicating undirected graphs), detect negative weights, and manage graph attributes like vertices count and edges.
 
-- שישה אופרטורים חשבוניים: חיבור (+) הוספה (+=) פלוס אונרי (+), ושלושת האופרטורים המקבילים לחיסור (-). כאמור, חיבור/חיסור של שתי מטריצות מוגדר רק על מטריצות מאותו סדר גודל nXn. ניסיון לחבר/לחסר שתי מטריצות שלא מקיימות תנאי זה יגרום לזריקת שגיאה.
-- שישה אופרטורי השוואה: גדול, גדול-או-שווה, קטן, קטן-או-שווה, שווה, לא-שווה. לשם מטלה זו כללי השוואת גרפים הם כדלקמן:
+#### Member Functions
+- `isSymmetric()`: Checks if the adjacency matrix is symmetric, indicating the graph is undirected.
+- `hasGraphNegativeWeight()`: Determines if any edge in the graph has a negative weight.
+- `loadGraph(vector<vector<int>> mtr)`: Initializes the graph with the specified adjacency matrix, determining properties like directionality and weight characteristics.
+- `printGraph()`: Returns a string representation of the adjacency matrix.
+- `get/setVertices()`: Accessor and mutator for the number of vertices in the graph.
+- `get/setAdjMatrix()`: Accessor and mutator for the adjacency matrix of the graph.
+- `isDirected()`, `hasNegativeWeight()`, `getEdges()`: Provide information about graph properties.
 
-  1. גרפים G1 ו-G2 ייקראו שווים אם הם מאותו סדר גודל ומכילים את אותן הצלעות (והמשקלים של הצלעות זהים) או אם G1 לא גדול מ-G2 וגם G2 לא גדול מ-G1.
-  2. גרף G2 גדול מגרף G1 אם הגרף G1 מוכל ממש בגרף G2. אם אף גרף לא מוכל ממש בשני והגרפים לא שווים, אז גרף G2 גדול מגרף G1 אם מספר הצלעות ב-G2 גדול ממספר הצלעות ב-G1. אם בכל זאת מספר הצלעות זהה, אז הגרף G2 גדול מהגרף G1 אם המטריצה המייצגת של G2 בעלת סדר גודל גבוה יותר משל G1.
+#### Overloaded Operators
+- **Arithmetic Operators**: `+`, `-`, `*`, `/` for graph addition, subtraction, multiplication by another graph or scalar, and division by a scalar, respectively.
+- **Unary Operators**: Unary `+` and `-` for creating a positive copy of the graph and negating all edge weights.
+- **Increment/Decrement**: `++` and `--` (both prefix and postfix) for incrementing or decrementing all edge weights by 1.
+- **Comparison Operators**: `==`, `!=`, `<`, `>`, `<=`, `>=` to compare two graphs based on vertices, edges, or graph properties like directionality.
 
-- הגדלה ב-1 (++) והקטנה ב-1 (--) לפני ואחרי המספר. פעולה זו תגדיל או תקטין ב-1 את כל המשקלים של הצלעות בגרף.
-- הכפלה בסקלר שלם (`int`) - מכפיל את המשקל של כל הצלעות.
-- הכפלת גרפים - אנחנו מגדירים את פעולת הכפל בין גרף G1 לגרף G2 על ידי מכפלה של המטריצות המייצגות של שני הגרפים. התוצאה צריכה להיות מטריצה המייצגת גרף. ניסיון לבצע כפל בין גרפים בגדלים שונים צריך לזרוק שגיאה.
-- אופרטור פלט - הדפסה הגיונית של הגרף (צורת ההפדסה היא לשיקולכם).
+### Detailed Operator Implementations and Their Impact on Graph Algorithms
 
+#### Operator Implementations
 
-כמו כן, עליכם לכלול גם את הקובץ `Algorithms.cpp` מהמטלה הקודמת ולראות כיצד הפונקציות שהגדרתם בפעם הקודמת משתנות עכשיו. בנוסף לקבצים של המטלה אתם נדרשים להגיש גם קובץ README המתאר את אופן המימוש ואת החלוקה שביצעתם בקוד (סוג של מדריך משתמש).
-עליכם לכתוב בתחילת כל קובץ את מספר תעודת הזהות שלכם ואת המייל. אי עמידה בהנחיות תגרור הפחתה בציון.
-בהצלחה!
+1. **Operator + (Addition of Graphs)**
+   - **Implementation**: This operator adds corresponding elements of the adjacency matrices of two graphs. It assumes both graphs have the same number of vertices.
+   - **Impact on Algorithms**: Adding two graphs can increase connectivity, potentially introducing new paths and decreasing the shortest path length between nodes.
 
+2. **Operator * (Multiplication by a Scalar)**
+   - **Implementation**: Multiplies every edge weight of the graph by a scalar value. This is straightforward as it applies the scalar multiplication to each entry in the adjacency matrix.
+   - **Impact on Algorithms**: Multiplying by a positive scalar does not change the graph's structure but scaling by a negative value can invert the sign of weights, affecting algorithms that differentiate between positive and negative weights, like those checking for negative cycles.
+
+3. **Operator - (Unary Negation)**
+   - **Implementation**: Negates the weights of all edges in the graph. This is implemented by applying a unary minus to each element of the adjacency matrix.
+   - **Impact on Algorithms**: Negating a graph can turn positive weight cycles into negative ones and vice versa, directly impacting algorithms like Bellman-Ford, which are used to detect negative cycles.
+
+4. **Increment/Decrement Operators (++, --)**
+   - **Implementation**: These operators increase or decrease every edge weight by 1. They can be applied in both prefix and postfix forms.
+   - **Impact on Algorithms**: Incrementing or decrementing weights can affect the total weight of paths, potentially altering the outcomes of shortest path algorithms or changing the status of a graph from having no negative cycles to having them.
+
+#### Example: Impact of Operators on Algorithms
+
+Let's consider a more concrete example involving the decrement operator and its effect on a graph's connectivity and shortest path calculations:
+
+**Original Graph (G):**
+```
+0 - 1 - 3
+|       |
+4       2
+|       |
+3 - 2 - 0
+```
+**Graph after applying the decrement operator (--G):**
+```
+-1 - 0 - 2
+ |       |
+ 3       1
+ |       |
+ 2 - 1 - -1
+```
+
+#### Scenario: Checking Connectivity and Shortest Path
+- **Connectivity**: The original graph `G` might already be connected, but decrementing every edge by 1 could disconnect sections of the graph if any edge weight becomes zero, potentially isolating nodes.
+- **Shortest Path**: Algorithms like Dijkstra's may no longer function correctly without modifications since they do not handle negative weights. However, the decrement operation may shorten the perceived distances between nodes, altering the output of shortest path calculations.
+
+#### Test Case Example
+```cpp
+TEST_CASE("Graph Decrement Impact on Shortest Path") {
+    ariel::Graph g;
+    g.loadGraph({{0, 1, 3}, {1, 0, 2}, {3, 2, 0}});
+    --g;
+    ariel::Algorithms::shortestPath(g, 0, 2); // Check how the shortest path is affected
+}
+```
+In this test, we would evaluate how the shortest path length changes after the graph is decremented. The decrement could lead to a negative cycle, which would fundamentally alter the results from shortest path algorithms like Floyd-Warshall or Bellman-Ford, which need to be employed instead of Dijkstra's in the presence of negative weights.
+
+### Conclusion
+Each operator within the `Graph` class has been carefully implemented to allow intuitive graph manipulations. These operators can significantly influence the behavior of graph algorithms, either enhancing capabilities, introducing limitations, or necessitating the use of different algorithms to accommodate changes in graph properties like edge weights and connectivity.
