@@ -2,7 +2,7 @@
 ### Ariel Levovich - 326535242
 
 #### Overview
-The `Graph` class encapsulates the functionality for representing and manipulating both directed and undirected graphs using adjacency matrices. It includes a comprehensive set of member functions for graph manipulation, along with overloaded operators that enhance ease of use and intuitive interaction with graph data.
+The `Graph` class encapsulates functionality for representing and manipulating both directed and undirected graphs using adjacency matrices. It includes a comprehensive set of member functions for graph manipulation, along with overloaded operators that enhance ease of use and intuitive interaction with graph data.
 
 #### Key Features
 - **Graph Representation**: Utilizes adjacency matrices to store graph data, supporting both directed and undirected graph types.
@@ -22,27 +22,29 @@ The `Graph` class encapsulates the functionality for representing and manipulati
 - **Unary Operators**: Unary `+` and `-` for creating a positive copy of the graph and negating all edge weights.
 - **Increment/Decrement**: `++` and `--` (both prefix and postfix) for incrementing or decrementing all edge weights by 1.
 - **Comparison Operators**: `==`, `!=`, `<`, `>`, `<=`, `>=` to compare two graphs based on vertices, edges, or graph properties like directionality.
+- **Output Stream Operator (`<<`)**: Facilitates the output of the graph's adjacency matrix to a stream, enhancing readability and debugging capabilities.
 
-### Detailed Operator Implementations and Their Impact on Graph Algorithms
+#### Detailed Operator Implementations and Their Impact on Graph Algorithms
+- **Operator + (Addition of Graphs)**:
+  - **Implementation**: Sums the corresponding elements of the adjacency matrices of two graphs, assuming both graphs have the same number of vertices. If the vertex count differs, it throws an exception.
+  - **Impact on Algorithms**: This operation can significantly affect algorithms by increasing connectivity, introducing new paths, or even decreasing the shortest path length between nodes.
+  
+- **Operator * (Multiplication by a Scalar)**:
+  - **Implementation**: Multiplies each edge weight of the graph by a given scalar. This operator directly scales each entry in the adjacency matrix by the scalar value.
+  - **Impact on Algorithms**: Scaling by a positive scalar retains the graph's structure but alters path weights. If scaled by a negative, it can invert the sign of weights, impacting algorithms that differentiate between positive and negative weights, such as those checking for negative cycles.
+  
+- **Operator - (Unary Negation)**:
+  - **Implementation**: Negates the weights of all edges in the graph by applying a unary minus to each element of the adjacency matrix.
+  - **Impact on Algorithms**: This operator can turn positive weight cycles into negative ones and vice versa, affecting algorithms like Bellman-Ford, which are used to detect negative cycles.
 
-#### Operator Implementations
+- **Increment/Decrement Operators (++, --)**:
+  - **Implementation**: Both prefix and postfix forms are used to increment or decrement every edge weight by 1 across the entire adjacency matrix.
+  - **Impact on Algorithms**: These operations can alter the total weight of paths and might change the graph's characteristics from having no negative cycles to having them or vice versa. This is particularly critical for algorithms like shortest path calculations, where path costs are directly affected.
 
-1. **Operator + (Addition of Graphs)**
-   - **Implementation**: This operator adds corresponding elements of the adjacency matrices of two graphs. It assumes both graphs have the same number of vertices.
-   - **Impact on Algorithms**: Adding two graphs can increase connectivity, potentially introducing new paths and decreasing the shortest path length between nodes.
-
-2. **Operator * (Multiplication by a Scalar)**
-   - **Implementation**: Multiplies every edge weight of the graph by a scalar value. This is straightforward as it applies the scalar multiplication to each entry in the adjacency matrix.
-   - **Impact on Algorithms**: Multiplying by a positive scalar does not change the graph's structure but scaling by a negative value can invert the sign of weights, affecting algorithms that differentiate between positive and negative weights, like those checking for negative cycles.
-
-3. **Operator - (Unary Negation)**
-   - **Implementation**: Negates the weights of all edges in the graph. This is implemented by applying a unary minus to each element of the adjacency matrix.
-   - **Impact on Algorithms**: Negating a graph can turn positive weight cycles into negative ones and vice versa, directly impacting algorithms like Bellman-Ford, which are used to detect negative cycles.
-
-4. **Increment/Decrement Operators (++, --)**
-   - **Implementation**: These operators increase or decrease every edge weight by 1. They can be applied in both prefix and postfix forms.
-   - **Impact on Algorithms**: Incrementing or decrementing weights can affect the total weight of paths, potentially altering the outcomes of shortest path algorithms or changing the status of a graph from having no negative cycles to having them.
-
+- **Output Stream Operator (`<<`)**:
+  - **Implementation**: Outputs each row of the graph's adjacency matrix in a formatted manner to facilitate easy reading and debugging.
+  - **Usage**: Particularly useful in debugging and validating graph states during algorithm development or modification, ensuring that graph operations are applied correctly.
+ 
 #### Example: Impact of Operators on Algorithms
 
 Let's consider a more concrete example involving the decrement operator and its effect on a graph's connectivity and shortest path calculations:
@@ -78,6 +80,3 @@ TEST_CASE("Graph Decrement Impact on Shortest Path") {
 }
 ```
 In this test, we would evaluate how the shortest path length changes after the graph is decremented. The decrement could lead to a negative cycle, which would fundamentally alter the results from shortest path algorithms like Floyd-Warshall or Bellman-Ford, which need to be employed instead of Dijkstra's in the presence of negative weights.
-
-### Conclusion
-Each operator within the `Graph` class has been carefully implemented to allow intuitive graph manipulations. These operators can significantly influence the behavior of graph algorithms, either enhancing capabilities, introducing limitations, or necessitating the use of different algorithms to accommodate changes in graph properties like edge weights and connectivity.
